@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ES2017",
+        "module": "amd",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "moduleResolution": "classic",
+        "outDir": "dist",
+        "baseUrl": ".",
+        "forceConsistentCasingInFileNames": true
+    },
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Recommended",
+    "include": [
+        "src/libs/colorgradient.ts",
+        "src/**/*"
+    ]
+}
