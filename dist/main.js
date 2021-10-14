@@ -125,12 +125,16 @@ function initMap() {
         zoom: 7,
     });
 }
-function RefreshEarthquake() {
-    GetEarthquakeData().then(EarthquakeData => {
-        for (const earthquake of EarthquakeData.results) {
+const Circles = [];
+let min = 0;
+let max = 8;
+let EarthquakeData;
+function DrawMap() {
+    for (const earthquake of EarthquakeData.results) {
+        if (earthquake.size >= min && earthquake.size <= max) {
             const diff = Math.floor((Date.now() / 1000) - (new Date(earthquake.timestamp).valueOf() / 1000));
             const minutes = Math.min(Math.floor(diff / 60), 1440); // 1440 = 24 * 60
-            new google.maps.Circle({
+            Circles.push(new google.maps.Circle({
                 strokeColor: colorGradient.getColor(minutes),
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
@@ -139,9 +143,33 @@ function RefreshEarthquake() {
                 map,
                 center: { lng: earthquake.longitude, lat: earthquake.latitude },
                 radius: earthquake.size * 200,
-            });
+            }));
         }
+    }
+}
+function ClearMap() {
+    Circles.forEach((Circle) => {
+        Circle.setMap(null);
     });
+}
+let debounce = Date.now();
+function ReloadMap() {
+    if (Date.now() - debounce > 30) {
+        ClearMap();
+        DrawMap();
+    }
+}
+function RefreshEarthquake() {
+    GetEarthquakeData().then(data => {
+        EarthquakeData = data;
+        ReloadMap();
+    });
+}
+function SliderChange(SliderValue) {
+    const data = SliderValue.split(",");
+    min = parseFloat(data[0]);
+    max = parseFloat(data[1]);
+    ReloadMap();
 }
 RefreshEarthquake();
 async function GetEarthquakeData() {

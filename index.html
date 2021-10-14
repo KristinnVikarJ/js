@@ -3,8 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>JS Áfangi</title>
         <style>
             #map {
                 height: 100%;
@@ -17,10 +19,14 @@
         </style>
     </head>
     <body>
-        <div id="map"></div>
         <script src="dist/main.js"></script>
+        <div style="position: absolute; width: 90%; bottom: 2%; left: 5%;">
+            <input data-on-move="SliderChange(this.value);" data-value-max="8" data-accuracy="0.1" data-role="doubleslider" data-hint="true" data-hint-always="true">
+        </div>
+        <div id="map"></div>
         <script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJZeovfW7T6GJrbGaVf8ARU2gLsTzugX0&callback=initMap">
         </script>
+        <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
     </body>
 </html>
